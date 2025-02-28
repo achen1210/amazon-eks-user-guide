@@ -238,7 +238,9 @@ nodeadm init [flags]
 
 *Values*
 
-`install-validation` skips checking if the proceding install command ran successfully.
+`install-validation` skips checking if the proceeding install command ran successfully.
+
+`ip-validation` skips checking if the node's IP will fall within the cluster's RemoteNetworkConfig.
 
 |`-h`, `--help`
 |FALSE
@@ -359,6 +361,8 @@ nodeadm upgrade [KUBERNETES_VERSION] [flags]
 `node-validation` skips checking if the node has been cordoned.
 
 `init-validation` skips checking if the node has been initialized successfully before running upgrade.
+
+`ip-validation` skips checking if the node's IP will fall within the cluster's RemoteNetworkConfig.
 
 |`-h`, `--help`
 |FALSE
