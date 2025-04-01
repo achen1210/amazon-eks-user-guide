@@ -81,6 +81,26 @@ When running `nodeadm init`, `nodeadm` attempts to gather information about your
 "msg":"Command failed","error":"operation error EKS: DescribeCluster, https response error StatusCode: 403 ... AccessDeniedException"
 ----
 
+*Node IP not in remote node network CIDR*
+
+When running `nodeadm init`, you may see the following error if your node's IP address is not within your remote node network CIDRs.
+
+[source,bash,subs="verbatim,attributes"]
+----
+node IP ... is not in any of the remote network CIDR blocks
+----
+
+Confirm that you've properly configured your `RemoteNodeNetwork` and node network interfaces. If your node IP is still not what you expected, check the following:
+
+* If you are using IAM Roles Anywhere, kubelet performs a DNS lookup on the IAM Roles Anywhere `nodeName` and uses an IP associated with the node name if available. If you maintain DNS entries for nodes in your VPC, confirm that these entries point to IPs within your remote node network CIDRs.
+* If your node has multiple network interfaces, kubelet may select an interface with an IP address outside of your remote node network CIDRs. To use a different interface, specify its IP address using the `--node-ip` kubelet flag in your `nodeConfig.yaml`. For more information, see <<hybrid-nodes-nodeadm>>.
+
+You can view your node's network interfaces and its IP addresses by running the following command on your node:
+
+[source,bash,subs="verbatim,attributes"]
+----
+ip addr show
+----
 
 *Hybrid nodes are not appearing in EKS cluster*
 
